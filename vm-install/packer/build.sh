@@ -35,6 +35,24 @@ curl -fSL -o ssd-ubuntu.pkr.hcl https://raw.githubusercontent.com/BasavaRajSomes
 
 curl -fSL -o ssd-ubuntu.pkrvars.hcl https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/packer/ssd-ubuntu.pkrvars.hcl
 
+# Get the latest Ubuntu Noble cloud image checksum
+IMG="noble-server-cloudimg-amd64.img"
+CHECKSUM=$(curl -fsSL \
+  "https://cloud-images.ubuntu.com/noble/current/SHA256SUMS" | \
+  awk -v img="$IMG" '$2 == "*"img {print $1}')
+
+if [ -z "$CHECKSUM" ]; then
+  echo "[ERROR] Failed to retrieve checksum for $IMG"
+  exit 1
+fi
+
+echo "Using Ubuntu image checksum: $CHECKSUM"
+
+# Replace the old checksum in the Packer variables file
+sed -i -E \
+  's/[0-9a-f]{64}/'"$CHECKSUM"'/g' \
+  ssd-ubuntu.pkrvars.hcl
+
 # 🔧 Render cloud-init config from template
 envsubst '${RELEASETAG}' <user-data.tpl >user-data
 echo "✅ Rendered user-data with RELEASETAG=$RELEASETAG"
