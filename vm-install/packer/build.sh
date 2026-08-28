@@ -19,7 +19,7 @@ packer plugins install github.com/hashicorp/qemu
 sudo apt install -y qemu-system-x86 qemu-utils
 sudo apt install xorriso -y
 
-curl -fSL -o bundle-lite-prefetch.sh https://raw.githubusercontent.com/OpsMx/enterprise-ssd/$RELEASETAG/vm-install/image-setup/bundle-lite-prefetch.sh
+curl -fSL -o bundle-lite-prefetch.sh https://raw.githubusercontent.com/OpsMx/enterprise-ssd/$RELEASETAG/vm-install/image-setup/bundle.sh
 
 curl -fSL -o extract-images-list.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/extract-images-list.sh
 
@@ -60,8 +60,8 @@ echo "✅ Rendered user-data with RELEASETAG=$RELEASETAG"
 # (when not dealing with version tags) Update release tag in version.env with what value is in enviornment variable
 sed -i "s/^RELEASETAG=.*/RELEASETAG=${RELEASETAG}/" version.env
 
-chmod +x bundle-lite-prefetch.sh
-./bundle-lite-prefetch.sh
+chmod +x bundle.sh
+./bundle.sh
 
 #IMG="jammy-server-cloudimg-amd64.img"
 #IMG_URL="https://cloud-images.ubuntu.com/jammy/current/$IMG"
