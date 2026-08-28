@@ -39,7 +39,6 @@ curl -fSL -o opsmxssd/fetch-ssl-cert.sh https://raw.githubusercontent.com/Basava
 curl -fSL -o extract-images-list.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/extract-images-list.sh
 curl -fSL -o pull-images.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/pull-images.sh
 curl -fSL -o clean-before-build.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/clean-before-build.sh
-curl -fSL -o opsmxssd/bootstrap.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/job.yaml
 
 chmod +x opsmxssd/bootstrap.sh
 chmod +x opsmxssd/install.sh
