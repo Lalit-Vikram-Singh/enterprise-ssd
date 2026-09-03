@@ -19,21 +19,21 @@ packer plugins install github.com/hashicorp/qemu
 sudo apt install -y qemu-system-x86 qemu-utils
 sudo apt install xorriso -y
 
-curl -fSL -o bundle.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/bundle.sh
+curl -fSL -o bundle.sh https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/image-setup/bundle.sh
 
-curl -fSL -o extract-images-list.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/extract-images-list.sh
+curl -fSL -o extract-images-list.sh https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/image-setup/extract-images-list.sh
 
-curl -fSL -o version.env https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/version.env
+curl -fSL -o version.env https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/image-setup/version.env
 
-curl -fSL -o user-data.tpl https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/packer/user-data.tpl
+curl -fSL -o user-data.tpl https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/packer/user-data.tpl
 
-curl -fSL -o meta-data https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/packer/meta-data
+curl -fSL -o meta-data https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/packer/meta-data
 
-curl -fSL -o network-config https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/packer/network-config
+curl -fSL -o network-config https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/packer/network-config
 
-curl -fSL -o ssd-ubuntu.pkr.hcl https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/packer/ssd-ubuntu.pkr.hcl
+curl -fSL -o ssd-ubuntu.pkr.hcl https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/packer/ssd-ubuntu.pkr.hcl
 
-curl -fSL -o ssd-ubuntu.pkrvars.hcl https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/packer/ssd-ubuntu.pkrvars.hcl
+curl -fSL -o ssd-ubuntu.pkrvars.hcl https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/packer/ssd-ubuntu.pkrvars.hcl
 
 # Get the latest Ubuntu Noble cloud image checksum
 IMG="noble-server-cloudimg-amd64.img"
