@@ -31,14 +31,14 @@ sudo systemctl start docker
 
 mkdir -p opsmxssd
 
-curl -fSL -o opsmxssd/default-ssd-minimal-values.yaml https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/charts/ssd/ssd-minimal-values.yaml
-curl -fSL -o opsmxssd/bootstrap.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/bootstrap.sh
-curl -fSL -o opsmxssd/install.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/install.sh
-curl -fSL -o opsmxssd/add-dns-entry-in-local.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/add-dns-entry-in-local.sh
-curl -fSL -o opsmxssd/fetch-ssl-cert.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/fetch-ssl-cert.sh
-curl -fSL -o extract-images-list.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/extract-images-list.sh
-curl -fSL -o pull-images.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/pull-images.sh
-curl -fSL -o clean-before-build.sh https://raw.githubusercontent.com/BasavaRajSomesetty/enterprise-ssd/$RELEASETAG/vm-install/image-setup/clean-before-build.sh
+curl -fSL -o opsmxssd/default-ssd-minimal-values.yaml https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/charts/ssd/ssd-minimal-values.yaml
+curl -fSL -o opsmxssd/bootstrap.sh https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/image-setup/bootstrap.sh
+curl -fSL -o opsmxssd/install.sh https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/image-setup/install.sh
+curl -fSL -o opsmxssd/add-dns-entry-in-local.sh https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/image-setup/add-dns-entry-in-local.sh
+curl -fSL -o opsmxssd/fetch-ssl-cert.sh https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/image-setup/fetch-ssl-cert.sh
+curl -fSL -o extract-images-list.sh https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/image-setup/extract-images-list.sh
+curl -fSL -o pull-images.sh https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/image-setup/pull-images.sh
+curl -fSL -o clean-before-build.sh https://raw.githubusercontent.com/Lalit-Vikram-Singh/enterprise-ssd/$RELEASETAG/vm-install/image-setup/clean-before-build.sh
 
 chmod +x opsmxssd/bootstrap.sh
 chmod +x opsmxssd/install.sh
@@ -104,3 +104,28 @@ else
 	--set controller.progressDeadlineSeconds=120 \
 	--set controller.minReadySeconds=10
 fi
+
+normalize_name() {
+  echo "$1" | sed 's/[\/:]/_/g'
+}
+
+echo "pulling the images and saving it as tar file..."
+IMAGES_DIR="./images"
+export IMAGES_DIR
+mkdir -p "$IMAGES_DIR"
+while IFS= read -r image; do
+  if [ -z "$image" ]; then continue; fi
+
+  echo "Pulling $image..."
+  sudo docker pull "$image"
+
+  filename="$(normalize_name "$image").tar"
+  echo "Saving $image as $filename"
+  sudo docker save -o "$IMAGES_DIR/$filename" "$image"
+
+done <"image-list.txt"
+
+sudo chmod 644 $IMAGES_DIR/*.tar
+sudo chmod +x $IMAGES_DIR
+
+echo "all images saved in $IMAGES_DIR"
