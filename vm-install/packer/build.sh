@@ -73,5 +73,6 @@ chmod +x bundle.sh
 #iso_checksum = "sha256:$CHECKSUM"
 #EOF
 
-packer init .
-PACKER_LOG=1 packer build -var-file=ssd-ubuntu.pkrvars.hcl .
+#commenting for now below packer steps
+#packer init .
+#PACKER_LOG=1 packer build -var-file=ssd-ubuntu.pkrvars.hcl .
