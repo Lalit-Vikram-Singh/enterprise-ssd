@@ -125,8 +125,10 @@ normalize_name() {
 #  sudo docker save -o "$IMAGES_DIR/$filename" "$image"
 #
 #done <"image-list.txt"
+#
+#sudo chmod 644 $IMAGES_DIR/*.tar
+#sudo chmod +x $IMAGES_DIR
+#
+#echo "all images saved in $IMAGES_DIR"
 
-sudo chmod 644 $IMAGES_DIR/*.tar
-sudo chmod +x $IMAGES_DIR
-
-echo "all images saved in $IMAGES_DIR"
+echo "build script ends here"
