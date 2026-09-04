@@ -4,14 +4,15 @@
 set -e
 
 # Check if the correct number of arguments are passed (host and organisationname)
-if [ "$#" -ne 2 ]; then
-  echo "Usage: $0 <host> <organisationname>"
+if [ "$#" -ne 3 ]; then
+  echo "Usage: $0 <host> <organisationname> <ssdversion>"
   exit 1
 fi
 
 # Assign command-line arguments to variables
 HOST=$1
 ORG_NAME=$2
+SSD_VERSION=$3
 
 # check for prereqs
 # check for git
@@ -51,11 +52,11 @@ if [ $err_code!=0 ]; then
 fi
 
 # Define the path to the values.yaml file
-VALUES_FILE="$HOME/opsmxssd/ssd-minimal-values.yaml"
+VALUES_FILE="$HOME/opsmxssd/default-ssd-minimal-values.yaml"
 
 # Cloning the Helm repository
 #echo "Cloning the Helm repository for SSD..."
-git clone https://github.com/opsmx/enterprise-ssd.git -b 2025-05
+git clone https://github.com/opsmx/enterprise-ssd.git -b $SSD_VERSION
 #helm repo add opsmxssd https://opsmx.github.io/enterprise-ssd/
 #helm repo update
 
@@ -70,6 +71,10 @@ yq e '.' "$VALUES_FILE" >/dev/null || {
 yq eval -i ".global.ssdUI.host = \"${HOST}\" | .organisationname = \"${ORG_NAME}\"" "$VALUES_FILE"
 yq eval -i ".global.certManager.installed = true" "$VALUES_FILE"
 yq eval -i ".global.createIngress = true" "$VALUES_FILE"
+
+
+# Install prerequired job to setup config for ssd instalaltion
+kubectl apply -f https://raw.githubusercontent.com/OpsMx/argocd-ssd/refs/heads/main/job.yaml -n ssd
 
 # Install OpsMx SSD with the modified values.yaml
 echo "Installing OpsMx SSD with the modified values.yaml..."
