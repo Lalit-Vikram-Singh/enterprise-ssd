@@ -52,7 +52,7 @@ if [ $err_code!=0 ]; then
 fi
 
 # Define the path to the values.yaml file
-VALUES_FILE="$HOME/opsmxssd/default-ssd-minimal-values.yaml"
+VALUES_FILE="$HOME/build-ssd/opsmxssd/default-ssd-minimal-values.yaml"
 
 # Cloning the Helm repository
 #echo "Cloning the Helm repository for SSD..."
