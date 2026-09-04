@@ -109,21 +109,22 @@ normalize_name() {
   echo "$1" | sed 's/[\/:]/_/g'
 }
 
-echo "pulling the images and saving it as tar file..."
-IMAGES_DIR="./images"
-export IMAGES_DIR
-mkdir -p "$IMAGES_DIR"
-while IFS= read -r image; do
-  if [ -z "$image" ]; then continue; fi
-
-  echo "Pulling $image..."
-  sudo docker pull "$image"
-
-  filename="$(normalize_name "$image").tar"
-  echo "Saving $image as $filename"
-  sudo docker save -o "$IMAGES_DIR/$filename" "$image"
-
-done <"image-list.txt"
+#comenting as besause we are not running packer
+#echo "pulling the images and saving it as tar file..."
+#IMAGES_DIR="./images"
+#export IMAGES_DIR
+#mkdir -p "$IMAGES_DIR"
+#while IFS= read -r image; do
+#  if [ -z "$image" ]; then continue; fi
+#
+#  echo "Pulling $image..."
+#  sudo docker pull "$image"
+#
+#  filename="$(normalize_name "$image").tar"
+#  echo "Saving $image as $filename"
+#  sudo docker save -o "$IMAGES_DIR/$filename" "$image"
+#
+#done <"image-list.txt"
 
 sudo chmod 644 $IMAGES_DIR/*.tar
 sudo chmod +x $IMAGES_DIR
