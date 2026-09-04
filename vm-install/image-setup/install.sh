@@ -46,9 +46,9 @@ echo "K3s node is in Ready state."
 sudo cp /etc/rancher/k3s/k3s.yaml k3s.yaml
 sudo chown $(whoami) k3s.yaml
 export KUBECONFIG=$(pwd)/k3s.yaml
-kubectl get ns ssd || err_code=$?
+kubectl get ns ssdbake || err_code=$?
 if [ $err_code!=0 ]; then
-  kubectl create ns ssd
+  kubectl create ns ssdbake
 fi
 
 # Define the path to the values.yaml file
@@ -74,11 +74,11 @@ yq eval -i ".global.createIngress = true" "$VALUES_FILE"
 
 
 # Install prerequired job to setup config for ssd instalaltion
-kubectl apply -f https://raw.githubusercontent.com/OpsMx/argocd-ssd/refs/heads/main/job.yaml -n ssd
+kubectl apply -f https://raw.githubusercontent.com/OpsMx/argocd-ssd/refs/heads/main/job.yaml -n ssdbake
 
 # Install OpsMx SSD with the modified values.yaml
 echo "Installing OpsMx SSD with the modified values.yaml..."
-helm install ssd enterprise-ssd/charts/ssd/ -f $VALUES_FILE -f enterprise-ssd/charts/ssd/rc-images-values.yaml -n ssd -n ssd --timeout=600s
+helm install ssd enterprise-ssd/charts/ssd/ -f $VALUES_FILE -f enterprise-ssd/charts/ssd/rc-images-values.yaml -n ssdbake --timeout=600s
 echo "SSD installation complete."
 
 RED='\033[0;31m'
